@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # Serviço do Next.js
+  next-app:
+    container_name: next-app
+    build:
+      context: ./view
+    ports:
+      - '3000:3000'
+    environment:
+      - NEXT_PUBLIC_API_URL=http://fastify-app:3001
+    depends_on:
+      - fastify-app
+    networks:
+      - app-network
+
+  # Serviço do Fastify
+  fastify-app:
+    container_name: fastify-app
+    build:
+      context: ./server-app
+    ports:
+      - '3001:3001'
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres-db:5432/mydatabase
+    depends_on:
+      - postgres-db
+    networks:
+      - app-network
+
+  # Serviço do PostgreSQL
+  postgres-db:
+    container_name: postgres-db
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mydatabase
+    ports:
+      - '5432:5432'
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
