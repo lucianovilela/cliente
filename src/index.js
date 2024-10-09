@@ -2,7 +2,7 @@
 const fastify = require('fastify')({ logger: true });
 const prisma = require('./prismaClient');
 const crudPlugin = require('./crudPlugin');
-const cors = require('fastify-cors');
+const cors = require('@fastify/cors');
 
 fastify.register(cors, { origin: true });
 // Registrar o plugin CRUD para o modelo `User`
