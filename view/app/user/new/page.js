@@ -1,6 +1,7 @@
 "use client"
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+const  SERVER=process.env.NEXT_PUBLIC_URL_SERVER || 'http://localhost:3000'
 
 export default function CreateUser() {
   const [name, setName] = useState('');
@@ -10,7 +11,7 @@ export default function CreateUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch('https://3000-lucianovilela-cliente-n013wmzgp62.ws-us116.gitpod.io/users', {
+    await fetch(`${SERVER}/users`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email }),

@@ -2,13 +2,15 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
+const  SERVER=process.env.NEXT_PUBLIC_URL_SERVER || 'http://localhost:3000'
 export default function Home() {
   const [users, setUsers] = useState([]);
 
   // Buscar todos os usuários na API
   useEffect(() => {
     async function fetchUsers() {
-      const response = await fetch('https://3000-lucianovilela-cliente-n013wmzgp62.ws-us116.gitpod.io/users');
+
+      const response = await fetch(`${SERVER}/users`);
       const data = await response.json();
       setUsers(data);
     }

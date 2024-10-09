@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-
+const  SERVER=process.env.NEXT_PUBLIC_URL_SERVER || 'http://localhost:3000';
 export default function UserDetail({params}) {
   const router = useRouter();
 
@@ -11,14 +11,14 @@ export default function UserDetail({params}) {
   useEffect(() => {
     if (id) {
       // Buscar o usuário com base no ID
-      fetch(`https://3000-lucianovilela-cliente-n013wmzgp62.ws-us116.gitpod.io/users/${id}`)
+      fetch(`${SERVER}/users/${id}`)
         .then((res) => res.json())
         .then((data) => setUser(data));
     }
   }, [id]);
 
   const handleUpdate = async () => {
-    await fetch(`https://3000-lucianovilela-cliente-n013wmzgp62.ws-us116.gitpod.io/users/${id}`, {
+    await fetch(`${SERVER}/users/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user),
@@ -29,7 +29,7 @@ export default function UserDetail({params}) {
   };
 
   const handleDelete = async () => {
-    await fetch(`https://3000-lucianovilela-cliente-n013wmzgp62.ws-us116.gitpod.io/users/${id}`, {
+    await fetch(`${SERVER}/users/${id}`, {
       method: 'DELETE',
     });
 
